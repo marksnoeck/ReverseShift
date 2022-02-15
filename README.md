@@ -13,9 +13,9 @@ Todo
 
 
 ## More info
-[GCJ02 Distortion Map](https://github.com/leifgehrmann/gcj02-distortion-map)
-[A short guide to Chinese coordinate system](https://abstractkitchen.com/blog/a-short-guide-to-chinese-coordinate-system/)
-[Eviltransform](https://github.com/googollee/eviltransform)
+- [GCJ02 Distortion Map](https://github.com/leifgehrmann/gcj02-distortion-map)
+- [A short guide to Chinese coordinate system](https://abstractkitchen.com/blog/a-short-guide-to-chinese-coordinate-system/)
+- [Eviltransform](https://github.com/googollee/eviltransform)
 
 ## Todo
 - Additional how-to
