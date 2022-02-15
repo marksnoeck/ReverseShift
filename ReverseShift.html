@@ -1,0 +1,293 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="assets/stylesheet.css">
+  <script type="text/javascript" src="assets/eviltransform.js"></script>
+  <title>ReverseShift</title>
+</head>
+
+<body>
+                <h1><b>ReverseShift</b></h1>
+                <p>Switching between coordinate systems</p>
+                <p>How does this work?</p>
+                <fieldset>
+                  <p>Obtaining GCJ-02/BD-09 coordinates from maps</p>
+
+                  <div class="api">
+                    <form target="_blank" action="https://lbs.amap.com/demo/javascript-api/example/geocoder/regeocoding">
+                      <input type="submit" class="button" value="Open Amap API" />
+                      <br />
+                    </form>
+                  </div>
+                  <div class="api">
+                    <form target="_blank" action="https://api.map.baidu.com/lbsapi/getpoint/index.html">
+                      <input type="submit" class="button" value="Open Baidu API" />
+                      <br />
+                    </form>
+                  </div>
+                  <div class="api">
+                    <form target="_blank" action="https://lbs.qq.com/getPoint/">
+                      <input type="submit" class="button" value="Open QQ Maps API" />
+                      <br />
+                    </form>
+                  </div>
+                </fieldset>
+
+                <form onsubmit="ClearAll">
+                  <input type="submit" class="button" value="Clear All" style="margin: 2rem;"/><br />
+                </form>
+
+                <p><b>Select coordinate system of origin</b></p>
+
+                    <div class="radio">
+                      <input type="radio" onclick="javascript:selectB();" name="cosys" id="BD09" value="BD09"><label for="BD09">BD-09 (Baidu)</label>
+                      <input type="radio" onclick="javascript:selectG();" name="cosys" id="GCJ" value ="GCJ"/><label for="GCJ">GCJ-02 (Mars)</label>
+                      <input type="radio" onclick="javascript:selectW();" name="cosys" id="WGS" value ="WGS" checked="checked"/><label for="WGS">WGS-84 (GPS)</label>
+                    </div>
+
+
+
+                    <script type="text/javascript">
+
+                    window.addEventListener('load', (event) => {
+                      selectW();
+                      document.getElementById('WGS').checked=true;
+                    });
+
+                    function selectB() {
+                        console.log(document.querySelector('input[name="cosys"]:checked').value);
+                        document.getElementById("WGSdiv").style.display = 'block';
+                        document.getElementById("BDdiv").style.display = 'none';
+                        document.getElementById("GCJdiv").style.display = 'block';
+                      }
+
+                    function selectG() {
+                        console.log(document.querySelector('input[name="cosys"]:checked').value);
+                        document.getElementById("WGSdiv").style.display = 'block';
+                        document.getElementById("BDdiv").style.display = 'block';
+                        document.getElementById("GCJdiv").style.display = 'none';
+                      }
+
+                    function selectW() {
+                        console.log(document.querySelector('input[name="cosys"]:checked').value);
+                        document.getElementById("WGSdiv").style.display = 'none';
+                        document.getElementById("BDdiv").style.display = 'block';
+                        document.getElementById("GCJdiv").style.display = 'block';
+                      }
+
+                    function ClearAll() {
+                      document.getElementById("Transform").reset();
+                      document.getElementById("Lat").reset();
+                      document.getElementById("Lng").reset();
+                      document.getElementById("WGSa").reset();
+                      document.getElementById("WGSb").reset();
+                      document.getElementById("GCJa").reset();
+                      document.getElementById("GCJb").reset();
+                      document.getElementById("BaiduLat").reset();
+                      document.getElementById("BaiduLng").reset();
+                    }
+                    </script>
+
+
+                    <div>
+                      <script type="text/javascript">
+                        function doSplit(coord) {
+                          var Coordinates = coord;
+                          var Arr = Coordinates.split(',');
+                          console.log(Arr);
+
+                          var coord = document.querySelector('input[name="cosys"]:checked').value;
+
+                            LatToPop = document.getElementById("Lat");
+                            LngToPop = document.getElementById("Lng");
+                            if (LatToPop !== null && LngToPop !== null) {
+
+                              if (coord == 'WGS') {
+                              LatToPop.value = Arr[0].trim();
+                              LngToPop.value = Arr[1].trim();
+                            } else {
+                              LatToPop.value = Arr[1].trim();
+                              LngToPop.value = Arr[0].trim();
+                            }
+                            }
+                          }
+                      </script>
+                      <form onsubmit="doSplit(this.Split.value); return false;">
+                        <input type="text" id="Split" size="36" placeholder="Coordinates" />
+                        <input type="submit" class="button" value="Split" /><br />
+                      </form>
+                    </div>
+
+                    <div>
+                      <form onsubmit="Transform(parseFloat(document.getElementById('Lat').value), parseFloat(document.getElementById('Lng').value)); return false;">
+                        <input type="text" id="Lat" size="18" placeholder="Latitude" />
+                        <input type="text" id="Lng" size="18" placeholder="Longitude" />
+                        <input type="submit" class="button" value="Transform" /><br />
+                      </form>
+
+                      <br />
+
+                      <br />
+                    </div>
+
+                      <script type="text/javascript">
+                      function Transform(Lat, Lng) {
+                        var coord = document.querySelector('input[name="cosys"]:checked').value;
+                        console.log(coord);
+                        if (coord == 'BD09') {
+                          console.log('BD09 selected');
+                        var jsonW = JSON.stringify(eviltransform.bd2wgs(Lat,Lng));
+                        var jsonG = JSON.stringify(eviltransform.bd2gcj(Lat,Lng));
+                        console.log(jsonW);
+                        console.log(jsonG);
+                        var wgs = JSON.parse(jsonW);
+                        var gcj = JSON.parse(jsonG);
+
+                        var LatWGS = wgs.lat;
+                        var LngWGS = wgs.lng;
+
+
+                        var LatGCJ = gcj.lat;
+                        var LngGCJ = gcj.lng;
+
+                        LatWGSToPop = document.getElementById("WGSa");
+                        LngWGSToPop = document.getElementById("WGSb");
+
+                        if (LatWGSToPop != null && LngWGSToPop != null) {
+                          LatWGSToPop.value = LatWGS;
+                          LngWGSToPop.value = LngWGS;
+                        }
+
+                        PopGCJ(LatGCJ, LngGCJ);
+
+
+                      } else if (coord == 'GCJ') {
+                        var jsonW = JSON.stringify(eviltransform.gcj2wgs(Lat,Lng));
+                        var jsonB = JSON.stringify(eviltransform.gcj2bd(Lat,Lng));
+                        var wgs = JSON.parse(jsonW);
+                        var b = JSON.parse(jsonB);
+
+                        var LatWGS = wgs.lat;
+                        var LngWGS = wgs.lng;
+
+                        var LatB = b.lat;
+                        var LngB = b.lng;
+
+                        LatWGSToPop = document.getElementById("WGSa");
+                        LngWGSToPop = document.getElementById("WGSb");
+
+                        if (LatWGSToPop != null && LngWGSToPop != null) {
+                          LatWGSToPop.value = LatWGS;
+                          LngWGSToPop.value = LngWGS;
+                        }
+
+                        LatBToPop = document.getElementById("BaiduA");
+                        LngBToPop = document.getElementById("BaiduB");
+
+                        if (LatBToPop != null && LngBToPop != null) {
+                          LatBToPop.value = LatB;
+                          LngBToPop.value = LngB;
+                        }
+
+                      } else {
+                        var jsonG = JSON.stringify(eviltransform.wgs2gcj(Lat,Lng));
+                        var jsonB = JSON.stringify(eviltransform.wgs2bd(Lat,Lng));
+                        var gcj = JSON.parse(jsonG);
+                        var b = JSON.parse(jsonB);
+
+                        var LatGCJ = gcj.lat;
+                        var LngGCJ = gcj.lng;
+
+                        var LatB = b.lat;
+                        var LngB = b.lng;
+
+                        PopGCJ(LatGCJ, LngGCJ);
+
+                        LatBToPop = document.getElementById("BaiduA");
+                        LngBToPop = document.getElementById("BaiduB");
+
+                        if (LatBToPop != null && LngBToPop != null) {
+                          LatBToPop.value = LatB;
+                          LngBToPop.value = LngB;
+                        }
+                      }
+
+                      }
+
+                        function PopGCJ(Lat, Lng) {
+                            LatToPop01 = document.getElementById("GCJa");
+                            LngToPop01 = document.getElementById("GCJb");
+                            if (LatToPop01 !== null && LngToPop01 !== null) {
+                              LatToPop01.value = Lat;
+                              LngToPop01.value = Lng;
+                            }
+                          }
+
+                      </script>
+
+                    <div id="WGSdiv" style="display:none;">
+                      <h1>WGS-84</h1>
+                      <script type="text/javascript">
+                        function doWGS(WGSa, WGSb) {
+                          window.open('https://www.google.com/maps/@?api=1&map_action=map&center=' + WGSa + '%2C' + WGSb + '&zoom=15&basemap=satellite', '_blank');
+                        }
+                      </script>
+                      <form onsubmit="doWGS(this.WGSa.value, this.WGSb.value); return false;">
+                        <input type="text" id="WGSa" size="18" placeholder="Latitude" />
+                        <input type="text" id="WGSb" size="18" placeholder="Longitude" />
+                        <input type="submit" class="button" value="Google Maps" />
+                      </form></br>
+                    </div>
+
+
+                    <div id="BDdiv" style="display:none;">
+                      <h1>BD-09</h1>
+                      <script type="text/javascript">
+                        function Baidu(BaiduA, BaiduB) {
+                        window.open('https://map.baidu.com/?latlng=' + BaiduA + ',' + BaiduB, '_blank');
+                        }
+                      </script>
+                      <form onsubmit="Baidu(this.BaiduA.value, this.BaiduB.value); return false;">
+                        <input type="text" id="BaiduA" size="18" placeholder="Latitude" />
+                        <input type="text" id="BaiduB" size="18" placeholder="Longitude" />
+                        <input type="submit" class="button" value="Open Baidu Maps" />
+                        <br />
+                      </form>
+
+                      <br />
+                    </div>
+
+
+                    <div id="GCJdiv" style="display:none;">
+                      <h1>GCJ-02</h1>
+
+
+                      <script type="text/javascript">
+                        function GCJ(GCJa, GCJb) {
+                          window.open('https://www.amap.com/regeo?lng=' + GCJb + '&lat=' + GCJa, '_blank');
+                        }
+                      </script>
+                      <form onsubmit="GCJ(this.GCJa.value, this.GCJb.value); return false;">
+                        <input type="text" id="GCJa" size="18" placeholder="Latitude" />
+                        <input type="text" id="GCJb" size="18" placeholder="Longitude" />
+                        <input type="submit" class="button" value="Open Amap/Gadou" />
+                        <br />
+                      </form>
+
+
+                    </div>
+
+
+                  <footer>
+                    <p><b>About</b></p>
+                    <p>Made by <a target="_blank" href="https://twitter.com/marksnoeck">@marksnoeck</a> ©, powered by <a target="_blank" href="https://github.com/googollee/eviltransform">Eviltransform</a> ©.</p>
+                    <p><i class="fab fa-github"></i>View code and license <a target="_blank" href="https://github.com/marksnoeck">here</a>.</p>
+
+                  </footer>
+
+
+</body>
+
+</html>
