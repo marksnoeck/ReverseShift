@@ -9,45 +9,42 @@
 </head>
 
 <body>
+
                 <h1><b>ReverseShift</b></h1>
-                <p>Switching between coordinate systems</p>
-                <p>How does this work?</p>
+                <p>Switching between coordinate systems –
+                <a target="blank" href="https://github.com/marksnoeck/ReverseShift">How?</a></p>
                 <fieldset>
-                  <p>Obtaining GCJ-02/BD-09 coordinates from maps</p>
+                  <p>Resources for obtaining GCJ-02/BD-09 coordinates</p>
 
                   <div class="api">
                     <form target="_blank" action="https://lbs.amap.com/demo/javascript-api/example/geocoder/regeocoding">
-                      <input type="submit" class="button" value="Open Amap API" />
-                      <br />
+                      <input type="submit" class="button" value="Amap API" />
                     </form>
                   </div>
                   <div class="api">
                     <form target="_blank" action="https://api.map.baidu.com/lbsapi/getpoint/index.html">
-                      <input type="submit" class="button" value="Open Baidu API" />
-                      <br />
+                      <input type="submit" class="button" value="Baidu API" />
                     </form>
                   </div>
                   <div class="api">
                     <form target="_blank" action="https://lbs.qq.com/getPoint/">
-                      <input type="submit" class="button" value="Open QQ Maps API" />
-                      <br />
+                      <input type="submit" class="button" value="QQ Maps API" />
                     </form>
                   </div>
                 </fieldset>
 
                 <form onsubmit="ClearAll">
-                  <input type="submit" class="button" value="Clear All" style="margin: 2rem;"/><br />
+                  <input type="submit" class="button" value="Clear All" style="margin: 1rem;"/><br />
                 </form>
 
                 <p><b>Select coordinate system of origin</b></p>
+                <p><b>&#8595;</b></p>
 
                     <div class="radio">
                       <input type="radio" onclick="javascript:selectB();" name="cosys" id="BD09" value="BD09"><label for="BD09">BD-09 (Baidu)</label>
                       <input type="radio" onclick="javascript:selectG();" name="cosys" id="GCJ" value ="GCJ"/><label for="GCJ">GCJ-02 (Mars)</label>
-                      <input type="radio" onclick="javascript:selectW();" name="cosys" id="WGS" value ="WGS" checked="checked"/><label for="WGS">WGS-84 (GPS)</label>
+                      <input type="radio" onclick="javascript:selectW();" name="cosys" id="WGS" value ="WGS" checked="checked"/><label for="WGS">WGS-84 (Common outside PRC)</label>
                     </div>
-
-
 
                     <script type="text/javascript">
 
@@ -115,7 +112,7 @@
                           }
                       </script>
                       <form onsubmit="doSplit(this.Split.value); return false;">
-                        <input type="text" id="Split" size="36" placeholder="Coordinates" />
+                        <input type="text" id="Split" size="41" placeholder="Coordinates" />
                         <input type="submit" class="button" value="Split" /><br />
                       </form>
                     </div>
@@ -126,10 +123,6 @@
                         <input type="text" id="Lng" size="18" placeholder="Longitude" />
                         <input type="submit" class="button" value="Transform" /><br />
                       </form>
-
-                      <br />
-
-                      <br />
                     </div>
 
                       <script type="text/javascript">
@@ -228,7 +221,7 @@
                       </script>
 
                     <div id="WGSdiv" style="display:none;">
-                      <h1>WGS-84</h1>
+                      <h2>WGS-84</h2>
                       <script type="text/javascript">
                         function doWGS(WGSa, WGSb) {
                           window.open('https://www.google.com/maps/@?api=1&map_action=map&center=' + WGSa + '%2C' + WGSb + '&zoom=15&basemap=satellite', '_blank');
@@ -238,12 +231,12 @@
                         <input type="text" id="WGSa" size="18" placeholder="Latitude" />
                         <input type="text" id="WGSb" size="18" placeholder="Longitude" />
                         <input type="submit" class="button" value="Google Maps" />
-                      </form></br>
+                      </form>
                     </div>
 
 
                     <div id="BDdiv" style="display:none;">
-                      <h1>BD-09</h1>
+                      <h2>BD-09</h2>
                       <script type="text/javascript">
                         function Baidu(BaiduA, BaiduB) {
                         window.open('https://map.baidu.com/?latlng=' + BaiduA + ',' + BaiduB, '_blank');
@@ -253,7 +246,6 @@
                         <input type="text" id="BaiduA" size="18" placeholder="Latitude" />
                         <input type="text" id="BaiduB" size="18" placeholder="Longitude" />
                         <input type="submit" class="button" value="Open Baidu Maps" />
-                        <br />
                       </form>
 
                       <br />
@@ -261,7 +253,7 @@
 
 
                     <div id="GCJdiv" style="display:none;">
-                      <h1>GCJ-02</h1>
+                      <h2>GCJ-02</h2>
 
 
                       <script type="text/javascript">
@@ -273,7 +265,7 @@
                         <input type="text" id="GCJa" size="18" placeholder="Latitude" />
                         <input type="text" id="GCJb" size="18" placeholder="Longitude" />
                         <input type="submit" class="button" value="Open Amap/Gadou" />
-                        <br />
+
                       </form>
 
 
@@ -286,7 +278,6 @@
                     <p><i class="fab fa-github"></i>View code and license <a target="_blank" href="https://github.com/marksnoeck">here</a>.</p>
 
                   </footer>
-
 
 </body>
 

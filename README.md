@@ -3,19 +3,16 @@ Switching between coordinate systems
 
 ## How does it work?
 
-First select the coordinate system of origin. Paste the coordinates in the coordinates field, or in the latitude and longitude fields underneath if you copied them seperately. 
+This HTML page allows reversing the offset in PRC Maps, and works both online and offline.
 
-The Split button will split the coordinates into latitude and longitude, and the Transform button pastes transformed coordinates in the fields of the two other systems. You can now copy the transformed coordinates or open the location in the corresponding maps.
+Open the page and select the coordinate system that you want to transform. Paste coordinates in the coordinates field or latitude and longitude, depending on what you have. The Split button splits the coordinates into latitude and longitude, and the Transform button transformes and pops new coordinates in the fields of the two other systems. Now you will be able to copy the transformed coordinates or open the location in the corresponding maps right away.
 
-
-## Obtaining coordinates from Baidu Maps, Amap...
-Todo
+## Obtaining coordinates from...
+....
 
 
 ## More info
-- [GCJ02 Distortion Map](https://github.com/leifgehrmann/gcj02-distortion-map)
-- [A short guide to Chinese coordinate system](https://abstractkitchen.com/blog/a-short-guide-to-chinese-coordinate-system/)
-- [Eviltransform](https://github.com/googollee/eviltransform)
+
 
 ## Todo
 - Additional how-to
